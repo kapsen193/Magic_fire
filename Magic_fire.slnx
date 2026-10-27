@@ -3,5 +3,6 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
+  <Folder Name="/Элементы решения/" />
   <Project Path="Magic_fire/Magic_fire.vcxproj" Id="e463cc0b-ed0b-4089-8f35-3126e79ff836" />
 </Solution>
