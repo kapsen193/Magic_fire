@@ -160,7 +160,9 @@
     <Font Include="assets\Sheeppuff.otf" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="assets\bg2.png" />
     <Image Include="x64\Debug\assets\bg1.png" />
+    <Image Include="x64\Debug\assets\bgset.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

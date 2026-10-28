@@ -28,5 +28,11 @@
     <Image Include="x64\Debug\assets\bg1.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+    <Image Include="assets\bg2.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="x64\Debug\assets\bgset.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
 </Project>
