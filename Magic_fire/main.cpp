@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 // перечисление игровых экранов
-enum GameScreen {MENU,EDUCATION,SETTINGS};
+enum GameScreen {MENU,MODE_SELECT,SETTINGS,DIALOGE_SCENE,SHOOTING_GUIDE};
 int main()  
 {	
 	//SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
@@ -21,19 +21,38 @@ int main()
 	SetTextureFilter(textFont.texture, TEXTURE_FILTER_ANISOTROPIC_16X);
 	Texture2D bg= LoadTexture("assets/bg2.png");
 	Texture2D bgset = LoadTexture("assets/bgset.png");
+	Texture2D bgdial = LoadTexture("assets/bgdial.png");
 
+	//прогресс обучения
+	bool EducationCompleted = false;
+	int dialoge_step = 0;
+	const char* dialogeTexts[] = {
+		"Hello, my young wizard",
+		"Use fireball",
+		"I have new mission for you",
+	};
 
 	while (!WindowShouldClose()){
 		Vector2 mousepoint = GetMousePosition();
 		if (currentScreen == MENU) {
 			if (CheckCollisionPointRec(mousepoint, playBtnRect) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-				currentScreen = EDUCATION;
+				if (EducationCompleted == false) {
+					currentScreen = DIALOGE_SCENE;
+					dialoge_step = 0;
+					if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+						dialoge_step++;
+					}
+				}
+				else {
+					currentScreen = MODE_SELECT;
+				}
+					
 		}
 			if (CheckCollisionPointRec(mousepoint, settingsBtnRect) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
 				currentScreen = SETTINGS;
 			}
 		}
-		else if (currentScreen == EDUCATION) {
+		else if (currentScreen == MODE_SELECT) {
 			if (IsKeyPressed(KEY_ESCAPE)) {
 				currentScreen = MENU;
 			}
@@ -81,10 +100,10 @@ int main()
 			DrawTextEx(textFont, play, { (1920 - playSize.x) / 2.0f + 12, 650 }, 50, 1, playColor);
 			DrawTextEx(textFont, set, { (1920 - setSize.x) / 2.0f + 12,700 }, 50, 1, setColor);
 		}
-		else if (currentScreen == EDUCATION) {
+		else if (currentScreen == DIALOGE_SCENE) {
 			DrawTexturePro(
-				bg,
-				{ 0, 0, (float)bg.width, (float)bg.height },
+				bgdial,
+				{ 0, 0, (float)bgdial.width, (float)bgdial.height },
 				{ 0, 0, (float)GetScreenWidth(), (float)GetScreenHeight() },
 				{ 0, 0 },
 				0.0f,

@@ -5,4 +5,5 @@
   </Configurations>
   <Folder Name="/Элементы решения/" />
   <Project Path="Magic_fire/Magic_fire.vcxproj" Id="e463cc0b-ed0b-4089-8f35-3126e79ff836" />
+  <Project Path="mathTest/mathTest.vcxproj" Id="7f49ec5e-5271-445b-a93e-0ec840f5b9b7" />
 </Solution>

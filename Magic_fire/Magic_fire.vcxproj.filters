@@ -34,5 +34,8 @@
     <Image Include="x64\Debug\assets\bgset.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+    <Image Include="x64\Debug\assets\bgdial.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
 </Project>
