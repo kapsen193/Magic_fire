@@ -1,4 +1,6 @@
 #include "raylib.h"
+#include "muParser.h"
+#include <cstdlib>
 using namespace std;
 int main() {
 	InitWindow(1920, 1080, "Tester");
@@ -8,9 +10,19 @@ int main() {
 	int letterCount = 0;
 	bool isTyping = false;
 
+	Vector2 startPos = { 100,500 };
+	Vector2 ballPos = startPos;
+	bool isFlying = false;
+	float currentX = 0;
+	mu::Parser parser;
+	double x_val = 0.0;
+	double mathY = 0.0;
+	parser.DefineVar("x", &x_val);
 	while (!WindowShouldClose()) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			isTyping = true;
+			letterCount = 0;
+			formula[0] = '\0';
 		}
 		if (isTyping) {
 			int key = GetCharPressed();
@@ -27,24 +39,62 @@ int main() {
 				if (letterCount < 0) letterCount = 0;
 				formula[letterCount] = '\0';
 			}
-			
+
 			if (IsKeyPressed(KEY_ENTER)) {
 				isTyping = false;
+
+				if (letterCount > 0) {
+					try {
+						parser.SetExpr(formula);
+						isFlying = true;
+						currentX = 0;
+						ballPos = startPos;
+					}
+					catch (mu::Parser::exception_type& e) {
+						TraceLog(LOG_WARNING, "Ошибка в формуле: %s", e.GetMsg().c_str());
+						isFlying = false;
+					}
+				}
+			
 			}
 		}
+			if (isFlying) {
+				currentX += 5.0f;
+				x_val = currentX;
+				try {
+					mathY = parser.Eval();
+				}
+				catch (mu::Parser::exception_type& e) {
+					
+					isFlying = false;
+					TraceLog(LOG_WARNING, "Eval Error: %s", e.GetMsg().c_str());
+				}
+				ballPos.x = startPos.x + currentX;
+				ballPos.y = startPos.y - mathY;
+
+				if (ballPos.x > 1920 || ballPos.y < 0) {
+					isFlying = false;
+					}
+			}
+				
+			
+		
 		BeginDrawing();
 		DrawRectangle(100, 500, 600, 60, LIGHTGRAY);
 		DrawRectangleLines(100, 500, 600, 60, DARKGRAY);
 
 		if (isTyping) {
 			DrawText(TextFormat("%s_", formula), 110, 510, 30, BLACK);
-		}
-		else {
-			DrawText(TextFormat("%s_", formula), 110, 510, 30, BLACK);
+		}else {
 			if (letterCount == 0) {
 				DrawText("Click and type formula here...", 110, 510, 20, GRAY);
+			}else {
+				DrawText(TextFormat("%s_", formula), 110, 510, 30, BLACK);
 			}
 		
+		}
+		if (isFlying) {
+			DrawCircleV(ballPos, 10, ORANGE);
 		}
 
 

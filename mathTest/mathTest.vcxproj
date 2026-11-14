@@ -108,10 +108,10 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MUPARSER_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>D:\raylib\raylib-6.2_win64_msvc16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\raylib\raylib-6.2_win64_msvc16\include;D:\multilib\muparser-2.3.5\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -129,10 +129,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MUPARSER_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>D:\raylib\raylib-6.2_win64_msvc16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\raylib\raylib-6.2_win64_msvc16\include;D:\multilib\muparser-2.3.5\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -145,6 +145,15 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\multilib\muparser-2.3.5\src\muParser.cpp" />
+    <ClCompile Include="..\..\..\..\multilib\muparser-2.3.5\src\muParserBase.cpp" />
+    <ClCompile Include="..\..\..\..\multilib\muparser-2.3.5\src\muParserBytecode.cpp" />
+    <ClCompile Include="..\..\..\..\multilib\muparser-2.3.5\src\muParserCallback.cpp" />
+    <ClCompile Include="..\..\..\..\multilib\muparser-2.3.5\src\muParserDLL.cpp" />
+    <ClCompile Include="..\..\..\..\multilib\muparser-2.3.5\src\muParserError.cpp" />
+    <ClCompile Include="..\..\..\..\multilib\muparser-2.3.5\src\muParserInt.cpp" />
+    <ClCompile Include="..\..\..\..\multilib\muparser-2.3.5\src\muParserTest.cpp" />
+    <ClCompile Include="..\..\..\..\multilib\muparser-2.3.5\src\muParserTokenReader.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
