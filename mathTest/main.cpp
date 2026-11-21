@@ -10,6 +10,11 @@ int main() {
 	int letterCount = 0;
 	bool isTyping = false;
 
+	Vector2 goblinPos = { 1200,400 };
+	float goblinRadius = 40.0f;
+	bool goblinAlive = true;
+	int score = 0;
+
 	Vector2 startPos = { 100,500 };
 	Vector2 ballPos = startPos;
 	bool isFlying = false;
