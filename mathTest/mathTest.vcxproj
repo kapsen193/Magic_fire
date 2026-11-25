@@ -156,6 +156,9 @@
     <ClCompile Include="..\..\..\..\multilib\muparser-2.3.5\src\muParserTokenReader.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="gob1.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
