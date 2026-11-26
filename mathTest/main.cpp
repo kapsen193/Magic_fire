@@ -14,10 +14,18 @@ int main() {
 	float goblinRadius = 40.0f;
 	bool goblinAlive = true;
 	int score = 0;
+
 	Texture2D goblinTex = LoadTexture("gob1.png");
 	if (goblinTex.id == 0) {
 		TraceLog(LOG_ERROR, "ОШИБКА: Гоблин не загружен!");
 	}
+
+	Texture2D fireball = LoadTexture("fireball_spritelist.png");
+	int currentFrame = 0;
+	float frameTimer = 0.0f;
+	const int MAX_frames = 4; //4 кадра
+	const float Frame_speed = 0.1f; // скорость анимации 10 кадров в секунду
+
 	Vector2 startPos = { 100,500 };
 	Vector2 ballPos = startPos;
 	bool isFlying = false;
@@ -28,6 +36,7 @@ int main() {
 	float flashTimer = 0.0f;
 	bool justActivated = false;
 	parser.DefineVar("x", &x_val);
+
 	while (!WindowShouldClose()) {
 
 		// Если нажали R — перезапускаем гоблина
@@ -111,10 +120,19 @@ int main() {
 				}
 				ballPos.x = startPos.x + currentX;
 				ballPos.y = startPos.y - mathY;
+				//Анимация кадров
+				frameTimer += GetFrameTime();
+				if (frameTimer >= Frame_speed) {
+					frameTimer = 0.0f;
+					currentFrame++;
+					if (currentFrame >= MAX_frames) currentFrame = 0;
+				}
+				
 
 				// --- ПРОВЕРКА ПОПАДАНИЯ ---
 			    // Если гоблин жив и шарик коснулся его
-				if (goblinAlive && CheckCollisionCircles(ballPos, 10.0f, goblinPos, goblinRadius)) {
+				float currentBallRadius = (fireball.height * 0.3f) / 2.0f;
+				if (goblinAlive && CheckCollisionCircles(ballPos, currentBallRadius, goblinPos, goblinRadius)) {
 					goblinAlive = false; // Гоблин убит
 					isFlying = false; // Шарик останавливается
 					score += 100; // + очки
@@ -164,7 +182,15 @@ int main() {
 		
 		}
 		if (isFlying) {
-			DrawCircleV(ballPos, 10, ORANGE);
+			float scale = 0.3f;//размер шара
+			float frameWidth = (float)fireball.width / MAX_frames; //вырезает нужный кадр из списка спрайтов
+			Rectangle sourceRec = { currentFrame * frameWidth,0,frameWidth,(float)fireball.height };
+			DrawTexturePro(fireball,sourceRec,
+				{ ballPos.x, ballPos.y, frameWidth * scale, (float)fireball.height * scale },
+				{ (frameWidth * scale) / 2.0f, ((float)fireball.height * scale) / 2.0f }, // Центр
+				0.0f,
+				WHITE
+			);
 		}
 
 		// Рисуем гоблина, если он жив
@@ -197,6 +223,7 @@ int main() {
 
 		EndDrawing();
 	}
+	
 
 	CloseWindow();
 	return 0;

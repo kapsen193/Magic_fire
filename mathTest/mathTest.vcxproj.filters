@@ -50,5 +50,8 @@
     <Image Include="gob1.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+    <Image Include="fireball_spritelist.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
 </Project>
