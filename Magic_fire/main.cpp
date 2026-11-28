@@ -39,7 +39,8 @@ int main()
 	bool isTyping = false;
 
 	Vector2 goblinPos = { 1200,400 };
-	float goblinScale = 0.15f;
+	float goblinScale = 0.13f;
+	float ballScale = 0.25f;
 	bool goblinAlive = true;
 	int score = 0;
 
@@ -64,6 +65,8 @@ int main()
 	float flashTimer = 0.0f;
 	bool justActivated = false;
 	parser.DefineVar("x", &x_val);
+	float currentBallRadius = 0.0f;
+	float actualGoblinRadius = 0.0f;
 	Vector2 trail[500]; 
 	int trailCount = 0;
 
@@ -195,8 +198,8 @@ int main()
 
 				// --- ПРОВЕРКА ПОПАДАНИЯ ---
 				// Если гоблин жив и шарик коснулся его
-				float currentBallRadius = (fireball.height * 0.3f) / 2.0f;
-				float actualGoblinRadius = (goblinTex.height * 0.15f) / 2.0f;
+				currentBallRadius = (fireball.height * ballScale) / 2.0f;
+				actualGoblinRadius = (goblinTex.height * goblinScale) / 2.0f;
 				if (goblinAlive && CheckCollisionCircles(ballPos, currentBallRadius, goblinPos, actualGoblinRadius)) {
 					goblinAlive = false; // Гоблин убит
 					isFlying = false; // Шарик останавливается
@@ -333,8 +336,8 @@ int main()
 				float frameWidth = (float)fireball.width / MAX_frames; //вырезает нужный кадр из списка спрайтов
 				Rectangle sourceRec = { currentFrame * frameWidth,0,frameWidth,(float)fireball.height };
 				DrawTexturePro(fireball, sourceRec,
-					{ ballPos.x, ballPos.y, frameWidth * scale, (float)fireball.height * scale },
-					{ (frameWidth * scale) / 2.0f, ((float)fireball.height * scale) / 2.0f }, // Центр
+					{ ballPos.x, ballPos.y, frameWidth * ballScale, (float)fireball.height * ballScale },
+					{ (frameWidth * ballScale) / 2.0f, ((float)fireball.height * ballScale) / 2.0f }, // Центр
 					0.0f,
 					WHITE
 				);
@@ -365,7 +368,15 @@ int main()
 
 			
 		}
-
+		// ВРЕМЕННЫЙ КОД ДЛЯ ОТЛАДКИ ХИТБОКСОВ
+		/*if (isFlying) {
+			// Рисуем красный контур хитбокса шара
+			DrawCircleLines(ballPos.x, ballPos.y, currentBallRadius, RED);
+		}
+		if (goblinAlive) {
+			// Рисуем синий контур хитбокса гоблина
+			DrawCircleLines(goblinPos.x, goblinPos.y, actualGoblinRadius, BLUE);
+		}*/
 		EndDrawing();
 	}
 	UnloadTexture(bg);
