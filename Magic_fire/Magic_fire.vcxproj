@@ -114,10 +114,10 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MUPARSER_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>D:\raylib\raylib-6.2_win64_msvc16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\raylib\raylib-6.2_win64_msvc16\include;D:\multilib\muparser-2.3.5\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -135,10 +135,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MUPARSER_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>D:\raylib\raylib-6.2_win64_msvc16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\raylib\raylib-6.2_win64_msvc16\include;D:\multilib\muparser-2.3.5\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,6 +151,15 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\multilib\muparser-2.3.5\src\muParser.cpp" />
+    <ClCompile Include="..\..\..\..\multilib\muparser-2.3.5\src\muParserBase.cpp" />
+    <ClCompile Include="..\..\..\..\multilib\muparser-2.3.5\src\muParserBytecode.cpp" />
+    <ClCompile Include="..\..\..\..\multilib\muparser-2.3.5\src\muParserCallback.cpp" />
+    <ClCompile Include="..\..\..\..\multilib\muparser-2.3.5\src\muParserDLL.cpp" />
+    <ClCompile Include="..\..\..\..\multilib\muparser-2.3.5\src\muParserError.cpp" />
+    <ClCompile Include="..\..\..\..\multilib\muparser-2.3.5\src\muParserInt.cpp" />
+    <ClCompile Include="..\..\..\..\multilib\muparser-2.3.5\src\muParserTest.cpp" />
+    <ClCompile Include="..\..\..\..\multilib\muparser-2.3.5\src\muParserTokenReader.cpp" />
     <ClCompile Include="main.cpp">
     </ClCompile>
   </ItemGroup>
@@ -160,7 +169,10 @@
     <Font Include="assets\Sheeppuff.otf" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\x64\Debug\fireball_spritelist.png" />
     <Image Include="assets\bg2.png" />
+    <Image Include="assets\gamebg.png" />
+    <Image Include="assets\gob1.png" />
     <Image Include="x64\Debug\assets\bg1.png" />
     <Image Include="x64\Debug\assets\bgdial.png" />
     <Image Include="x64\Debug\assets\bgset.png" />
