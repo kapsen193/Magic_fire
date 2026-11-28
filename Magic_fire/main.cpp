@@ -39,7 +39,7 @@ int main()
 	bool isTyping = false;
 
 	Vector2 goblinPos = { 1200,400 };
-	float goblinRadius = 40.0f;
+	float goblinScale = 0.15f;
 	bool goblinAlive = true;
 	int score = 0;
 
@@ -64,6 +64,8 @@ int main()
 	float flashTimer = 0.0f;
 	bool justActivated = false;
 	parser.DefineVar("x", &x_val);
+	Vector2 trail[500]; 
+	int trailCount = 0;
 
 	int currentlevel = 1;// переменная уровня
 
@@ -158,6 +160,7 @@ int main()
 							TraceLog(LOG_WARNING, "Ошибка в формуле: %s", e.GetMsg().c_str());
 							isFlying = false;
 						}
+						trailCount = 0; // обнуляем след
 					}
 
 				}
@@ -176,6 +179,11 @@ int main()
 				}
 				ballPos.x = startPos.x + currentX;
 				ballPos.y = startPos.y - mathY;
+				//След из точек чтобы посмотреть траекторию шара
+				if (trailCount < 500) {
+					trail[trailCount] = ballPos;
+					trailCount++;
+				}
 				//Анимация кадров
 				frameTimer += GetFrameTime();
 				if (frameTimer >= Frame_speed) {
@@ -188,7 +196,8 @@ int main()
 				// --- ПРОВЕРКА ПОПАДАНИЯ ---
 				// Если гоблин жив и шарик коснулся его
 				float currentBallRadius = (fireball.height * 0.3f) / 2.0f;
-				if (goblinAlive && CheckCollisionCircles(ballPos, currentBallRadius, goblinPos, goblinRadius)) {
+				float actualGoblinRadius = (goblinTex.height * 0.15f) / 2.0f;
+				if (goblinAlive && CheckCollisionCircles(ballPos, currentBallRadius, goblinPos, actualGoblinRadius)) {
 					goblinAlive = false; // Гоблин убит
 					isFlying = false; // Шарик останавливается
 					score += 100; // + очки
@@ -313,8 +322,14 @@ int main()
 				}
 
 			}
+
+			for (int i = 0;i < trailCount;i += 3) { //+3 чтоюы не слипались
+				float alpha = (float)i / (float)trailCount; // чем дальше от шара точка тем тускнее она становится эффект затухания
+				DrawCircleV({ trail[i].x, trail[i].y - 5.0f }, 4.0f, Fade(ORANGE, alpha));
+			}
+
 			if (isFlying) {
-				float scale = 0.3f;//размер шара
+				float scale = 0.2f;//размер шара
 				float frameWidth = (float)fireball.width / MAX_frames; //вырезает нужный кадр из списка спрайтов
 				Rectangle sourceRec = { currentFrame * frameWidth,0,frameWidth,(float)fireball.height };
 				DrawTexturePro(fireball, sourceRec,
@@ -327,12 +342,11 @@ int main()
 
 			// Рисуем гоблина, если он жив
 			if (goblinAlive) {
-				float scale = 0.15f; // Уменьшение в 3 раза
 				DrawTexturePro(
 					goblinTex,
 					{ 0, 0, (float)goblinTex.width, (float)goblinTex.height }, // Берем всю картинку
-					{ goblinPos.x, goblinPos.y, (float)goblinTex.width * scale, (float)goblinTex.height * scale }, // Куда и какого размера рисовать
-					{ (goblinTex.width * scale) / 2.0f, (goblinTex.height * scale) / 2.0f }, // Точка вращения (теперь это центр картинки)
+					{ goblinPos.x, goblinPos.y, (float)goblinTex.width  * goblinScale, (float)goblinTex.height * goblinScale }, // Куда и какого размера рисовать
+					{ (goblinTex.width * goblinScale) / 2.0f, (goblinTex.height * goblinScale) / 2.0f }, // Точка вращения (теперь это центр картинки)
 					0.0f,
 					WHITE
 				);
@@ -348,6 +362,8 @@ int main()
 
 			// Рисуем счет
 			DrawText(TextFormat("SCORE: %i", score), 20, 30, 30, BLACK);
+
+			
 		}
 
 		EndDrawing();
